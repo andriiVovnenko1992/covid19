@@ -1,26 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import * as actions from './actionCreators';
+import { selectAllStatistics, selectLoadStatistics, selectStatisticAllCountries, selectSummaryStatistic } from './selectors';
+import Header from "./components/header";
+import Table from "./components/table";
+import Input from "./components/input";
+import Spinner from "./components/spinner";
 
-function App() {
+const App = ({ getAllStatisticsActionCreator, loadStatistics, summaryStatistic, allCountriesStatistics, changeInputStringActionCreator }) => {
+
+  useEffect(() => {
+    if(!allCountriesStatistics || !allCountriesStatistics.length) getAllStatisticsActionCreator();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+      <>
+      {
+        !loadStatistics || !summaryStatistic ? (<Spinner/>) : (
+            <div>
+              <Header statistic={summaryStatistic}/>
+              <Input func={changeInputStringActionCreator}/>
+              <Table  statistics={allCountriesStatistics}/>
+            </div>
+        )
+      }
+        </>
+  )
+};
 
-export default App;
+const mapStateToProps = (state) => {
+  const sortedStatistic = selectAllStatistics(state);
+  return {
+    summaryStatistic: selectSummaryStatistic(sortedStatistic),
+    allCountriesStatistics: selectStatisticAllCountries(state ,sortedStatistic),
+    loadStatistics: selectLoadStatistics(state),
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(actions, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
