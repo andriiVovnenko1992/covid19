@@ -13,7 +13,7 @@ const App = ({ getAllStatisticsActionCreator, loadStatistics, summaryStatistic, 
   useEffect(() => {
     if(!allCountriesStatistics || !allCountriesStatistics.length) getAllStatisticsActionCreator();
   }, []);
-
+  console.log('app')
   return (
       <>
       {

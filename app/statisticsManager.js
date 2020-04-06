@@ -1,14 +1,18 @@
-//const knex = require('./../knex');
+const { cloudKnex, localKnex } = require('./../knex');
 const TABLE_NAME = 'statistics';
-const { fakeStatics, static } = require('./fake');
+
+/*(async () => {
+    const copyDB = await localKnex(TABLE_NAME).select();
+    await cloudKnex(TABLE_NAME).truncate();
+    await cloudKnex(TABLE_NAME).insert(copyDB);
+})().then(() => process.exit());*/
+
 
 module.exports = {
   async getAllStatistics() {
-      const data = fakeStatics;//await knex(TABLE_NAME).select().orderBy('created_at', 'desc').limit(201);
-      return (data);
+      return localKnex(TABLE_NAME).select().orderBy('created_at', 'desc').limit(201);
   },
   async getOneStatistics(country) {
-      const data = static//await knex(TABLE_NAME).select().where({ country });
-      return data;
+      return localKnex(TABLE_NAME).select().where({country});
   },
 };

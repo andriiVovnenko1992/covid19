@@ -11,35 +11,34 @@ const CountryLink = styled.div`
 `;
 
 
-const Table = ({statistics}) => {
+const Table = ({ statistics }) => {
   return (
-      <>
-          <table className='table table-bordered mt-3'>
-              <thead className='thead-dark'>
-                <tr>
-                    <th scope='col'>Country</th>
-                    <th scope='col'>Total</th>
-                    <th scope='col'>Active</th>
-                    <th scope='col'>Recovered</th>
-                    <th scope='col'>Death</th>
-                </tr>
-              </thead>
-              <tbody>
-              {
-                  statistics.map(({country, total, active, recovered, death}) =>
-                      <tr key={country}>
-                          <th scope='row'><CountryLink as={Link} to={`/country/${country}`} >{country}</CountryLink></th>
-                          <td>{total}</td>
-                          <td>{active}</td>
-                          <td>{recovered}</td>
-                          <td>{death}</td>
-                      </tr>
-                  )
-              }
-              </tbody>
-
-          </table>
-      </>
+          <div className="container">
+              <table className='table table-bordered mt-3'>
+                  <thead className='thead-dark'>
+                    <tr>
+                        <th scope='col'>Country</th>
+                        <th scope='col'>Total</th>
+                        <th scope='col'>Active</th>
+                        <th scope='col'>Recovered</th>
+                        <th scope='col'>Death</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {
+                      statistics.map(({country, total, active, recovered, death}) =>
+                          <tr key={country}>
+                              <th scope='row'><CountryLink as={Link} to={`/country/${country}`} >{country}</CountryLink></th>
+                              <td>{total}</td>
+                              <td>{active}</td>
+                              <td>{recovered}</td>
+                              <td>{death}</td>
+                          </tr>
+                      )
+                  }
+                  </tbody>
+              </table>
+          </div>
   )
 };
 
