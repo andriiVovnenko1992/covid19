@@ -74,8 +74,8 @@ const ChartComponent = ({ statistics }) => {
     const chartContainer = useRef(null);
 
     useEffect(() => {
-        if(chartContainer && chartContainer.current) {
-            const newChartInstance = new Chart(chartContainer.current, config(statistics));
+        if(chartContainer) {
+            const newChartInstance = new Chart(chartContainer, config(statistics));
         }
     },[]);
     console.log('render')

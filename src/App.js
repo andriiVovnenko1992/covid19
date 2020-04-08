@@ -2,13 +2,20 @@ import React, { useEffect } from 'react';
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import * as actions from './actionCreators';
-import { selectAllStatistics, selectLoadStatistics, selectStatisticAllCountries, selectSummaryStatistic } from './selectors';
+import {
+  selectAllStatistics, selectLoadStatistics, selectStatisticAllCountries, selectSummaryStatistic,
+  selectSortedString,
+} from './selectors';
 import Header from "./components/header";
 import Table from "./components/table";
 import Input from "./components/input";
 import Spinner from "./components/spinner";
 
-const App = ({ getAllStatisticsActionCreator, loadStatistics, summaryStatistic, allCountriesStatistics, changeInputStringActionCreator }) => {
+const App = ({
+               getAllStatisticsActionCreator, loadStatistics, summaryStatistic,
+               allCountriesStatistics, changeInputStringActionCreator,
+               filterString
+}) => {
 
   useEffect(() => {
     if(!allCountriesStatistics || !allCountriesStatistics.length) getAllStatisticsActionCreator();
@@ -20,7 +27,7 @@ const App = ({ getAllStatisticsActionCreator, loadStatistics, summaryStatistic, 
         !loadStatistics || !summaryStatistic ? (<Spinner/>) : (
             <div>
               <Header statistic={summaryStatistic}/>
-              <Input func={changeInputStringActionCreator}/>
+              <Input changeFilter={changeInputStringActionCreator} filterString={filterString}/>
               <Table  statistics={allCountriesStatistics}/>
             </div>
         )
@@ -30,11 +37,11 @@ const App = ({ getAllStatisticsActionCreator, loadStatistics, summaryStatistic, 
 };
 
 const mapStateToProps = (state) => {
-  const sortedStatistic = selectAllStatistics(state);
   return {
-    summaryStatistic: selectSummaryStatistic(sortedStatistic),
-    allCountriesStatistics: selectStatisticAllCountries(state ,sortedStatistic),
+    summaryStatistic: selectSummaryStatistic(state),
+    allCountriesStatistics: selectStatisticAllCountries(state),
     loadStatistics: selectLoadStatistics(state),
+    filterString: selectSortedString(state),
   }
 };
 
