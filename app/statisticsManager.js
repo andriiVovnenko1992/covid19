@@ -10,9 +10,9 @@ const TABLE_NAME = 'statistics';
 
 module.exports = {
   async getAllStatistics() {
-      return localKnex(TABLE_NAME).select().orderBy('created_at', 'desc').limit(201);
+      return cloudKnex(TABLE_NAME).select().orderBy('created_at', 'desc').limit(201);
   },
   async getOneStatistics(country) {
-      return localKnex(TABLE_NAME).select().where({country});
+      return cloudKnex(TABLE_NAME).select().where({country});
   },
 };
