@@ -2,6 +2,15 @@ import React from "react";
 import {Link} from "react-router-dom";
 import styled from "styled-components";
 
+const TableStyled = styled.table`
+    tr {
+        transition: .3s;
+    }
+    tr:hover {
+        opacity: 0.3; 
+    }
+`;
+
 const CountryLink = styled.div`
     text-decoration: none;
     transition: 0.7s;
@@ -10,11 +19,10 @@ const CountryLink = styled.div`
         }
 `;
 
-
 const Table = ({ statistics }) => {
   return (
           <div className="container">
-              <table className='table table-bordered mt-3'>
+              <TableStyled className='table table-bordered mt-3'>
                   <thead className='thead-dark'>
                     <tr>
                         <th scope='col'>Country</th>
@@ -37,7 +45,7 @@ const Table = ({ statistics }) => {
                       )
                   }
                   </tbody>
-              </table>
+              </TableStyled>
           </div>
   )
 };
